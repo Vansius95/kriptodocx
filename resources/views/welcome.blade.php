@@ -46,6 +46,7 @@
 
             .content {
                 text-align: center;
+                padding: 10px;
             }
 
             .title {
@@ -68,7 +69,7 @@
             }
         </style>
     </head>
-    <body style="background-color: #0c2413; color:#FFF">
+    <body style="background-color: #e3e3e3; color:#28ad7c">
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <h1>

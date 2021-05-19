@@ -18,10 +18,9 @@
 		            <label for="file">Upload File</label>
 		            <input type="file" name="file">
 		            @error('file')
-		              <span class="help-block">file tidak boleh kosong</span>
+		              <span class="help-block">File tidak boleh kosong</span>
 		            @enderror
 		          </div>
-
 		        </div>
 		        <!-- /.box-body -->
 		        <div class="box-footer">

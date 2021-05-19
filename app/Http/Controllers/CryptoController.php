@@ -27,7 +27,7 @@ class CryptoController extends Controller
 
 
         $phpWord = \PhpOffice\PhpWord\IOFactory::createReader('Word2007')->load('uploads/temp/'.$file);
-		
+
 		$mac = '';
 
 		foreach($phpWord->getSections() as $section) {
@@ -75,15 +75,22 @@ class CryptoController extends Controller
 	    	// echo '<pre>';
 	    	// print_r($sp_key);
 	    	// die();
+	    	if ((count($sp_key) > count($sp_plaintext)) && count($sp_key) > 4) {
+	    		$m= (count($sp_plaintext))-(count($sp_key));
+	    		$s= (count($sp_key)+$m);
+	    		array_splice($sp_key, $s);
+
+	    	}
+
 	    	if(count($sp_plaintext)==1){
-	    		for ($i=0; $i < 3; $i++) { 
+	    		for ($i=0; $i < 3; $i++) {
 	    			array_push($sp_plaintext, " ");
 	    		}
-	    		
+
 	    	}
 
 	    	if (count($sp_plaintext)==2) {
-	    			for ($i=0; $i < 2; $i++) { 
+	    			for ($i=0; $i < 2; $i++) {
 	    			array_push($sp_plaintext, " ");
 	    		}
 	    	}
@@ -105,14 +112,14 @@ class CryptoController extends Controller
 
 	    			}
 	    			$sp_key = $d;
-	    			
+
 	    	}
 
 	    	// echo "<pre>";
 	    	// print_r($sp_key);
 	    	// die();
 
-	    	
+
 
 	    	// JIKA JUMLAH KARAKTER PLAINTEX TIDAK SAMA DENGAN JUMLAH KAR KEY
 	    	if(count($sp_plaintext) !== count($sp_key)){
@@ -137,7 +144,7 @@ class CryptoController extends Controller
 	    		// die();
 	    	}
 
-	    	
+
 
 	    	// echo '<pre>';
 	    	// print_r($sp_key);
@@ -166,7 +173,7 @@ class CryptoController extends Controller
 	    	}
 
 	    	$four_key = str_split(substr($key, 0, 4));
-	    
+
 
 	    	foreach($four_key as $key_matrix){
 	    		$matrix[] = (ord($key_matrix)-28);
@@ -178,7 +185,7 @@ class CryptoController extends Controller
 	    		$vernam_ord[] = (ord($val)-32);
 	    	}
 
-	    	
+
 
 	    	$matrix_chunk = array_chunk($matrix,2);
 	    	$matrix_chunk[0][1] = $matrix_chunk[0][1]+3;
@@ -201,7 +208,7 @@ class CryptoController extends Controller
 				$mchunk[$mkeys] = array_chunk($marray,2);
 			}
 
-			
+
 
 			foreach($mchunk as $mkey => $mval){
 				foreach($mval as $mkeys => $mvals){
@@ -209,7 +216,7 @@ class CryptoController extends Controller
 				}
 			}
 
-			
+
 
 			$result = '';
 			foreach($multiple_sum as $keys => $vals){
@@ -217,12 +224,12 @@ class CryptoController extends Controller
 					$result .= $valr;
 				}
 			}
-	    	
+
 	    	// echo '<pre>';
 	    	// var_dump($result);
 	    	// echo strlen($result);
 	    	// die();
-			
+
 			$phpWord = new \PhpOffice\PhpWord\PhpWord();
 			$section = $phpWord->addSection();
 			$section->addText(
@@ -246,7 +253,7 @@ class CryptoController extends Controller
 	    	$sp_plaintext = @$results[0];
 	    	// echo '<pre>';
 	    	// print_r($sp_plaintext);
-	    	// die();  
+	    	// die();
     		$key = $request->key;
 
     		// echo implode('', $sp_plaintext), '<br>';
@@ -262,10 +269,10 @@ class CryptoController extends Controller
 
 
 	    	$four_key = str_split(substr($key, 0, 4));
-	    	
+
 	    	$c=0;
 	    	foreach($four_key as $key_matrix){
-	    		$matrix[] = (ord($key_matrix)-28);	
+	    		$matrix[] = (ord($key_matrix)-28);
 	    	}
 
 
@@ -314,12 +321,12 @@ class CryptoController extends Controller
 	    	}
 
 
-	    	
+
 	    	foreach($matrix as $keys => $vals){
-	    		$invers[0] = $matrix[3]; 
-	    		$invers[1] = (220-$matrix[1]); 
-	    		$invers[2] = (220-$matrix[2]); 
-	    		$invers[3] = $matrix[0]; 
+	    		$invers[0] = $matrix[3];
+	    		$invers[1] = (220-$matrix[1]);
+	    		$invers[2] = (220-$matrix[2]);
+	    		$invers[3] = $matrix[0];
 	    	}
 
 	    	// echo "<pre>";
@@ -335,7 +342,7 @@ class CryptoController extends Controller
 
 	  //   	echo '<pre>';
 			// print_r($ord_plaintext_chunk);
-			// die();	   
+			// die();
 
 	    	foreach($ord_plaintext_chunk as $keyv => $valv){
 				foreach($h_invers_chunk as $keym => $valm){
